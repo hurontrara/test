@@ -45,6 +45,8 @@ def process():
         foreigns = json.dumps(foreigns, ensure_ascii=False, indent=4)
         major_required = json.dumps(major_required, ensure_ascii=False, indent=4)
         minor_required = json.dumps(minor_required, ensure_ascii=False, indent=4)
+        
+        cur.execute("USE hufscd")
 
         cur.execute('INSERT INTO students (name, major, minor, finished_semester, credit, cultures, scores, final_score, exam_papers, foreigns, major_required, minor_required) VALUES ' + 
                     f"('{name}', '{major}', '{minor}', '{finished_semester}', '{credit}', '{cultures}', '{scores}', '{final_score}', '{exam_papers}', '{foreigns}', '{major_required}', '{minor_required}')")

@@ -8,12 +8,12 @@ import os
 
 
 app = Flask(__name__)
-app.config['MYSQL_HOST'] = os.environ.get('Capstone_host')
+app.config['MYSQL_HOST'] = os.environ.get('CAPSTONE_HOST')
 print("MYSQL_HOST = ", app.config['MYSQL_HOST'])
-app.config['MYSQL_USER'] = os.environ.get('Capstone_user')
+app.config['MYSQL_USER'] = os.environ.get('CAPSTONE_USER')
 print("MYSQL_USER = ", app.config['MYSQL_USER'])
-app.config['MYSQL_PASSWORD'] = os.environ.get('Capstone_password')
-app.config['MYSQL_DB'] = os.environ.get('Capstone_db')
+app.config['MYSQL_PASSWORD'] = os.environ.get('CAPSTONE_PASSWORD')
+app.config['MYSQL_DB'] = os.environ.get('CAPSTONE_DB')
 app.config['MYSQL_PORT'] = 3306
 mysql = MySQL(app)
 

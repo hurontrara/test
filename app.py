@@ -7,19 +7,14 @@ import json
 import os
 import pymysql
 
-db = pymysql.connect(host=os.environ.get('Capstone_host'),
-                     port=3306,
-                     user=os.environ.get('Capstone_user'),
-                     passwd=os.environ.get('Capstone_password'),
-                     db=os.environ.get('Capstone_db'),
-                     charset='utf8')
 
 app = Flask(__name__)
-# app.config['MYSQL_HOST'] = os.environ.get('Capstone_host')
-# app.config['MYSQL_USER'] = os.environ.get('Capstone_user')
-# app.config['MYSQL_PASSWORD'] = os.environ.get('Capstone_password')
-# app.config['MYSQL_DB'] = os.environ.get('Capstone_db')
-# mysql = MySQL(app)
+app.config['MYSQL_HOST'] = os.environ.get('Capstone_host')
+app.config['MYSQL_USER'] = os.environ.get('Capstone_user')
+app.config['MYSQL_PASSWORD'] = os.environ.get('Capstone_password')
+app.config['MYSQL_DB'] = os.environ.get('Capstone_db')
+app.config['MYSQL_PORT'] = 3306
+mysql = MySQL(app)
 
 
 @app.route('/test', methods=["POST"])
@@ -39,8 +34,7 @@ def process():
     if not possiblity:
         return "유효하지 않은 학번과 비밀번호"
     else: # 2. 메인 서버로 아이디, 패스워드 보내기
-        # cur = mysql.connection.cursor()
-        cur = db.cursor()
+        cur = mysql.connection.cursor()
 
         dict_object = main(studentNum, password)
 
@@ -58,11 +52,8 @@ def process():
         cur.execute('INSERT INTO students (name, major, minor, finished_semester, credit, cultures, scores, final_score, exam_papers, foreigns, major_required, minor_required) VALUES ' + 
                     f"('{name}', '{major}', '{minor}', '{finished_semester}', '{credit}', '{cultures}', '{scores}', '{final_score}', '{exam_papers}', '{foreigns}', '{major_required}', '{minor_required}')")
         
-        # mysql.connection.commit()
-        db.commit()
-
-        # cur.close()
-        db.close()
+        mysql.connection.commit()
+        cur.close()
 
         return 'Data added successfully'
 
